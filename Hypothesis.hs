@@ -32,7 +32,10 @@ type HypothesisAPI =
         QueryParam "group"  Text :>
         QueryParam "tag"    Text :> 
         QueryParam "any"    Text :>       
-        Get '[JSON] [Annotation]
+        Get '[JSON] AnnotationRows
+
+newtype AnnotationRows = AnnotationRows [Annotation]
+  deriving (Show)
 
 type APIKey = Text
 
@@ -57,6 +60,9 @@ instance FromJSON Annotation where
                <*> o .: "uri"
                <*> o .: "id"
   parseJSON _ = mzero
+
+instance FromJSON AnnotationRows
+  where parseJSON (Object o) = (AnnotationRows <$> (o .: "rows"))
 
 hypothesisAPI :: Proxy HypothesisAPI
 hypothesisAPI = Proxy
@@ -84,5 +90,6 @@ search :: Maybe APIKey -- ^ Auth key
        -> Maybe Text -- ^ Any
        -> Manager
        -> BaseUrl
-       -> ExceptT ServantError IO [Annotation]
+       -> ExceptT ServantError IO AnnotationRows
+
 annotation :<|> search = client hypothesisAPI
