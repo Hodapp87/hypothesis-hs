@@ -20,9 +20,9 @@ import qualified Data.Text.IO as T
 -- | API type for hypothes.is (see
 -- <https://h.readthedocs.io/en/latest/api/>)
 type HypothesisAPI =
-       "annotations" :> Header "Authorization" APIKey :>
+       "api/annotations" :> Header "Authorization" APIKey :>
        Capture "id" AnnotationId :> Get '[JSON] Annotation
-  :<|> "search" :> Header "Authorization" APIKey :>
+  :<|> "api/search" :> Header "Authorization" APIKey :>
         QueryParam "limit"  Int :>
         QueryParam "offset" Int :>
         QueryParam "sort"   Text :>
@@ -61,23 +61,28 @@ instance FromJSON Annotation where
 hypothesisAPI :: Proxy HypothesisAPI
 hypothesisAPI = Proxy
 
-annotation :: Maybe APIKey
-           -> AnnotationId
+-- | Fetch an annotation by ID. (See
+-- <https://h.readthedocs.io/en/latest/api/#operation/fetchAnnotation>)
+annotation :: Maybe APIKey -- ^ Auth key
+           -> AnnotationId -- ^ Annotation to retrieve
            -> Manager
            -> BaseUrl
            -> ExceptT ServantError IO Annotation
-search :: Maybe APIKey
-       -> Maybe Int
-       -> Maybe Int
-       -> Maybe Text
-       -> Maybe Text
-       -> Maybe Text
-       -> Maybe Text
-       -> Maybe Text
-       -> Maybe Text
-       -> Maybe Text
+
+-- | Search annotations. (See
+-- <https://h.readthedocs.io/en/latest/api/#operation/search> for
+-- definitions of arguments.)
+search :: Maybe APIKey -- ^ Auth key
+       -> Maybe Int -- ^ Limit
+       -> Maybe Int -- ^ Offset
+       -> Maybe Text -- ^ Sort
+       -> Maybe Text -- ^ Order
+       -> Maybe Text -- ^ URI
+       -> Maybe Text -- ^ User
+       -> Maybe Text -- ^ Group
+       -> Maybe Text -- ^ Tag
+       -> Maybe Text -- ^ Any
        -> Manager
        -> BaseUrl
        -> ExceptT ServantError IO [Annotation]
 annotation :<|> search = client hypothesisAPI
-
