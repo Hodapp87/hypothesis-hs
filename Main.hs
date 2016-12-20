@@ -11,11 +11,10 @@ import Data.Text
 
 import qualified Hypothesis
 
--- (BaseUrl Http "hypothes.is" 80)
-
 endpoint :: BaseUrl
 endpoint = BaseUrl Https "hypothes.is" 443 ""
 
+-- See https://hypothes.is/account/developer
 key :: Text
 key = "nope"
 
