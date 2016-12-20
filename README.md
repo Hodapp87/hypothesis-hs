@@ -3,7 +3,8 @@ hypothesis-hs
 
 This is Haskell bindings
 (via [servant](https://hackage.haskell.org/package/servant)) for the
-web API of [hypothes.is](https://hypothes.is/).  This requires
+web API of [hypothes.is](https://hypothes.is/).  For private
+annotations (possibly other things) this requires
 a
 [developer API token](https://hypothes.is/blog/introducing-developer-api-tokens/).
 
@@ -14,3 +15,6 @@ the [web API](https://h.readthedocs.io/en/latest/api/) are supported:
 - [search](https://h.readthedocs.io/en/latest/api/#operation/search)
 
 This code is mostly scratch work at the moment.
+
+Inspired partly
+by [pypothesis](https://github.com/kshaffer/pypothesis).
