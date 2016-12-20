@@ -15,7 +15,7 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      .
-  exposed-modules:     Lib
+  exposed-modules:     Hypothesis
   build-depends:       base
                      , transformers
                      , text
@@ -37,6 +37,7 @@ executable hypothesis-hs-exe
                      , servant-client                     
                      , aeson
                      , http-client
+                     , http-client-tls
   default-language:    Haskell2010
 
 -- test-suite hypothesis-hs-test
