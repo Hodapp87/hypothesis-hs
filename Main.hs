@@ -63,6 +63,7 @@ fetchOpts = Fetch <$>
 -- 'Nothing' (by default) or else some 'Text'.
 parseMaybe :: String -> Parser (Maybe Text)
 parseMaybe s = fmap pack <$> option auto (long s <> value Nothing)
+-- TODO: The above does not seem to parse strings properly.
 
 searchOpts :: Parser Command
 searchOpts = Search <$> (SearchParams
